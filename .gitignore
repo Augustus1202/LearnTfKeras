@@ -138,3 +138,6 @@ logs/
 
 # Pycharm
 .idea/
+
+# Model Saving
+models/

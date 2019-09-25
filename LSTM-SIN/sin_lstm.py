@@ -13,7 +13,7 @@ config.gpu_options.per_process_gpu_memory_fraction = 0.3
 config.gpu_options.allow_growth = True
 keras.backend.set_session(tf.Session(config=config))
 
-HIDDEN_SIZE = 30
+HIDDEN_SIZE = 64
 NUM_LAYERS = 2
 TIMESTEPS = 10
 BATCH_SIZE = 128
@@ -39,10 +39,11 @@ model.add(keras.layers.Dense(1, activation=None))
 model.compile(optimizer=keras.optimizers.Adagrad(learning_rate=0.1), loss='mse')
 
 early_stopping = keras.callbacks.EarlyStopping(monitor='loss', min_delta=0,
-                                               patience=2, verbose=0, mode='auto',
+                                               patience=3, verbose=0, mode='auto',
                                                baseline=None, restore_best_weights=False)
 
-model.fit_generator(generator=gen_train_data, epochs=NUM_EPOC, verbose=2, callbacks=[early_stopping])
+model.fit_generator(generator=gen_train_data, epochs=NUM_EPOC, verbose=2,
+                    callbacks=[early_stopping])
 
 val_data = np.sin(np.sin(np.linspace(
     test_start, test_end, TESTING_EXAMPLES + TIMESTEPS, dtype=np.float32)))
